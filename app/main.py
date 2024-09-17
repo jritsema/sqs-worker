@@ -26,7 +26,7 @@ def process_message(message):
     # Add your custom message processing logic here
     # ...
 
-    time.sleep(5)
+    time.sleep(30)
 
     # Delete the processed message from the queue
     logging.info(f"Deleting message: {message['ReceiptHandle']}")
