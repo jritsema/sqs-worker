@@ -6,13 +6,56 @@ Includes Terraform and Python code.
 
 This repo uses [asdf](https://asdf-vm.com/) to manage the `terraform` CLI and the various other tools it depends upon. Completely optional.
 
-```
- Choose a make command to run
+## Usage
 
-  init    project initialization - install tools and register git hook
+To initialize the project:
+
 ```
+make init
+```
+
+This will install the required tools and register a pre-commit hook.
+
+To run the pre-commit checks:
+
+```
+make checks
+```
+
+To see a summary of the Terraform resource changes:
+
+```
+make summary
+```
+
+## Autoscaling
+
+This project includes a Lambda-based autoscaler that scales the ECS service based on the number of messages in the SQS queue. It runs on a 1-minute schedule and checks the queue attributes to determine if the service needs to be scaled up or down.
+
+## Monitoring
+
+The project also includes a CloudWatch dashboard that provides visibility into the following metrics:
+
+- Messages Queued
+- Messages Processing
+- Workers Desired
+- Workers Running
+- CPU Utilization
+- Memory Utilization
+
+## Python App
+
+The Python app that runs in the Fargate container is located in the `app/` directory. It uses the `boto3` library to receive messages from the SQS queue, process them, and delete them from the queue.
+
+## Deployment
+
+The Python app can be built and deployed using the `deploy.sh` script in the `app/` directory. This script logs in to the ECR registry, builds and pushes the Docker image, and then updates the ECS service to use the new image.
+
+
+# Terraform
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
 ## Requirements
 
 | Name | Version |
